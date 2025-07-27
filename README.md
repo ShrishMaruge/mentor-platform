@@ -18,19 +18,25 @@ This platform offers **mentor matching, session scheduling, progress tracking, r
 ---
 
 ## 🖼 **Screenshots / Output**
-> _Add screenshots of your platform UI below. This will give users a quick visual understanding of your project._
 
 ### **Home Page**
-![Home Page]("C:\Users\shash\OneDrive\Pictures\Screenshots\Screenshot 2025-07-28 000405.png")
+![Home Page](<img width="1892" height="901" alt="Screenshot 2025-07-28 000405" src="https://github.com/user-attachments/assets/9c0b4964-b361-4be1-8555-49e535f2812b" />)
 
 ### **Mentor Match Page**
-![Mentor Match]("C:\Users\shash\OneDrive\Pictures\Screenshots\Screenshot 2025-07-28 000614.png")
+![Mentor Match](<img width="1901" height="901" alt="Screenshot 2025-07-28 000614" src="https://github.com/user-attachments/assets/4d379f6b-39d6-4f2b-b1a6-c29fcb7f7208" />
+
+
+)
 
 ### **Session Scheduling**
-![Session Scheduling]("C:\Users\shash\OneDrive\Pictures\Screenshots\Screenshot 2025-07-28 000656.png")
+![Session Scheduling](<img width="925" height="889" alt="Screenshot 2025-07-28 000656" src="https://github.com/user-attachments/assets/4adaf247-d6e6-4182-9732-0b3cf401dfcd" />
+
+)
 
 ### **Admin Dashboard**
-![Admin Dashboard]("C:\Users\shash\OneDrive\Pictures\Screenshots\Screenshot 2025-07-28 000744.png")
+![Admin Dashboard](<img width="1896" height="898" alt="Screenshot 2025-07-28 000744" src="https://github.com/user-attachments/assets/ca7e1dee-95a7-4275-aa91-df914a3f18fa" />
+
+)
 
 
 ---
