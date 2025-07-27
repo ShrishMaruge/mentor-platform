@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mb-4 text-center translate-text">All Scheduled Sessions</h2>
+
+<div class="card shadow p-4">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Mentor</th>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Notes</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="sessionTableBody">
+      <tr>
+        <td colspan="7" class="text-center text-muted">Loading sessions...</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+async function loadAllSessions() {
+  const res = await fetch('/api/sessions');
+  const sessions = await res.json();
+  const tbody = document.getElementById('sessionTableBody');
+  tbody.innerHTML = "";
+
+  if (sessions.length === 0) {
+    tbody.innerHTML = "<tr><td colspan='7' class='text-center text-muted'>No sessions scheduled.</td></tr>";
+    return;
+  }
+
+  sessions.forEach((s, index) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${index + 1}</td>
+      <td>${s.mentor}</td>
+      <td>${s.title}</td>
+      <td>${s.date}</td>
+      <td>${s.time}</td>
+      <td>${s.notes || '-'}</td>
+      <td><button class="btn btn-danger btn-sm" onclick="deleteSession(${index})">Delete</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+async function deleteSession(index) {
+  if (!confirm("Are you sure you want to delete this session?")) return;
+  const res = await fetch(`/api/delete-session/${index}`, { method: "DELETE" });
+  const result = await res.json();
+  if (result.status === "success") {
+    alert("Session deleted!");
+    loadAllSessions();
+  } else {
+    alert("Failed to delete session.");
+  }
+}
+
+loadAllSessions();
+</script>
+{% endblock %}

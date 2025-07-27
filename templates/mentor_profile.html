@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow p-3">
+      <img src="/static/img/{{ mentor.image }}" class="card-img-top" alt="{{ mentor.name }}">
+      <div class="card-body">
+        <h3 class="card-title">{{ mentor.name }}</h3>
+        <p><b>Location:</b> {{ mentor.location }}</p>
+        <p><b>Skills:</b> 
+          {% for skill in mentor.skills %}
+            <span class="badge bg-primary">{{ skill }}</span>
+          {% endfor %}
+        </p>
+        <p><b>Rating:</b> ⭐ {{ mentor.rating }}</p>
+        <p>{{ mentor.bio }}</p>
+        <p><b>Contact:</b> {{ mentor.contact }}</p>
+        <a href="/schedule" class="btn btn-success">Schedule Session</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

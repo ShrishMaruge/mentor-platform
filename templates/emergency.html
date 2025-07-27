@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="text-center mb-4">Emergency Support</h2>
+<p class="text-center">Need help? Contact our 24x7 support lines.</p>
+
+<div class="row text-center">
+  {% for res in resources %}
+  <div class="col-md-6">
+    <div class="card p-3 shadow-sm hover-card">
+      <h5>{{ res.type }}</h5>
+      <p>{{ res.contact }}</p>
+      {% if res.type == "Helpline" %}
+      <a href="tel:{{ res.contact }}" class="btn btn-danger">Call Now</a>
+      {% else %}
+      <a href="mailto:{{ res.contact }}" class="btn btn-primary">Email Support</a>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<button class="btn btn-success mt-4" onclick="speak('Emergency support options are displayed on your screen.')">
+  Voice Assistance
+</button>
+{% endblock %}

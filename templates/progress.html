@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mb-4 text-center translate-text">Your Progress</h2>
+
+<div class="card shadow p-3 mb-4">
+  <canvas id="progressChart"></canvas>
+</div>
+
+<form id="progressForm" class="p-3 shadow bg-white rounded">
+  <div class="mb-3">
+    <label class="form-label translate-text">Your Current Progress</label>
+    <div class="input-group">
+      <input type="text" class="form-control" id="progressInput" placeholder="e.g., Completed 3 mentorship sessions">
+      <button type="button" class="btn btn-outline-secondary" id="voiceProgress" title="Speak Progress">🎤</button>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label class="form-label translate-text">Your Goals (comma-separated)</label>
+    <div class="input-group">
+      <input type="text" class="form-control" id="goalsInput" placeholder="e.g., Improve soft skills, Start a business">
+      <button type="button" class="btn btn-outline-secondary" id="voiceGoals" title="Speak Goals">🎤</button>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary translate-text">Save Progress</button>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctx = document.getElementById('progressChart').getContext('2d');
+let chart = new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+    labels: ['Completed', 'Remaining'],
+    datasets: [{
+      data: [0, 10], // Default, will update dynamically
+      backgroundColor: ['#0d6efd', '#ddd']
+    }]
+  }
+});
+
+// Load existing progress data from backend
+async function loadProgress() {
+  const res = await fetch('/progress');
+  const html = await res.text();
+  // Extract JSON if embedded or update chart dynamically later
+}
+loadProgress();
+
+document.getElementById('progressForm').onsubmit = async function(e) {
+  e.preventDefault();
+  const progressText = document.getElementById('progressInput').value.trim();
+  const goals = document.getElementById('goalsInput').value.split(',').map(g => g.trim()).filter(g => g);
+  
+  // Update chart (basic logic: count of completed vs remaining goals)
+  const completed = progressText.match(/\d+/) ? parseInt(progressText.match(/\d+/)[0]) : 0;
+  const total = completed + 7; // assume 7 remaining tasks for now
+  chart.data.datasets[0].data = [completed, total - completed];
+  chart.update();
+
+  await fetch('/progress', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({user: "default", progress: progressText, goals})
+  });
+  alert("Progress saved successfully!");
+};
+
+// Voice input for progress and goals
+document.getElementById("voiceProgress").onclick = () => {
+  startListening((text) => document.getElementById("progressInput").value = text);
+};
+document.getElementById("voiceGoals").onclick = () => {
+  startListening((text) => document.getElementById("goalsInput").value = text);
+};
+</script>
+{% endblock %}

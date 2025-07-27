@@ -1,0 +1,28 @@
+[
+    {
+      "question": "mentor",
+      "answer": "You can find mentors by going to the 'Find Mentor' section and entering your skills."
+    },
+    {
+      "question": "progress",
+      "answer": "Your learning progress is tracked on the 'Progress' page."
+    },
+    {
+      "question": "schedule",
+      "answer": "You can schedule sessions with your mentor in the 'Schedule' section."
+    },
+    {
+      "question": "emergency",
+      "answer": "For emergencies, call our helpline at 1800-123-4567 or check the 'Emergency' page."
+    },
+    {
+        "question": "how to find a mentor",
+        "answer": "You can find a mentor by visiting the Find Mentor page and selecting based on skills and location."
+      },
+      {
+        "question": "how to schedule a session",
+        "answer": "Go to the Schedule page and pick a date and time to book a session."
+      }
+    
+  ]
+  

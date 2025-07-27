@@ -1,0 +1,153 @@
+<div id="chatWidget" class="chat-widget shadow">
+    <div class="chat-header">
+      AI Assistant 
+      <span id="chatToggle">×</span>
+    </div>
+    <div class="chat-body" id="chatBody"></div>
+    <div class="chat-input">
+      <input type="text" id="chatMessage" placeholder="Ask me anything...">
+      <button id="chatSend">Send</button>
+      <button id="chatVoice">🎤</button>
+    </div>
+  </div>
+  
+  <style>
+  .chat-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    height: 400px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    display: none;
+    flex-direction: column;
+    z-index: 1000;
+    overflow: hidden;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  
+  .chat-widget.show {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .chat-widget.hide {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
+  .chat-header {
+    background: #0d6efd;
+    color: white;
+    padding: 8px;
+    border-radius: 10px 10px 0 0;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .chat-body {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    font-size: 14px;
+  }
+  
+  .chat-body div {
+    margin: 5px 0;
+    line-height: 1.4;
+  }
+  
+  .chat-body .user-msg {
+    color: #000;
+  }
+  
+  .chat-body .ai-msg {
+    color: #0d6efd;
+  }
+  
+  .chat-input {
+    display: flex;
+    border-top: 1px solid #ddd;
+  }
+  
+  .chat-input input {
+    flex: 1;
+    border: none;
+    padding: 8px;
+    outline: none;
+  }
+  
+  .chat-input button {
+    border: none;
+    background: #0d6efd;
+    color: white;
+    padding: 8px 10px;
+    cursor: pointer;
+  }
+  
+  .chat-input button:hover {
+    background: #0b5ed7;
+  }
+  </style>
+  
+  <script>
+  const chatWidget = document.getElementById("chatWidget");
+  const chatToggle = document.getElementById("chatToggle");
+  const chatBody = document.getElementById("chatBody");
+  const languageSelect = document.getElementById("languageSelect");
+  
+  // Open widget with F1
+  document.addEventListener("keydown", e => { 
+    if (e.key === "F1") {
+      e.preventDefault();
+      chatWidget.classList.remove('hide');
+      chatWidget.classList.add('show');
+    }
+  });
+  
+  // Close widget
+  chatToggle.onclick = () => {
+    chatWidget.classList.add('hide');
+    setTimeout(() => chatWidget.style.display = 'none', 300);
+  };
+  
+  document.getElementById("chatSend").onclick = sendMessage;
+  document.getElementById("chatVoice").onclick = () => startListening(handleVoiceMessage);
+  
+  function addMessage(sender, text, cls="") {
+    chatBody.innerHTML += `<div class="${cls}"><b>${sender}:</b> ${text}</div>`;
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+  
+  // Send message with translation
+  async function sendMessage() {
+    const msg = document.getElementById("chatMessage").value.trim();
+    if (!msg) return;
+    addMessage("You", msg, "user-msg");
+    document.getElementById("chatMessage").value = "";
+  
+    const lang = languageSelect ? languageSelect.value : 'en';
+    const translatedMsg = await translateText(msg, 'en'); // translate to English
+    const res = await fetch('/chat', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ message: translatedMsg })
+    });
+    const data = await res.json();
+    const translatedResponse = await translateText(data.response, lang);
+    addMessage("AI", translatedResponse, "ai-msg");
+    speak(translatedResponse);
+  }
+  
+  function handleVoiceMessage(text) {
+    document.getElementById("chatMessage").value = text;
+    sendMessage();
+  }
+  </script>
+  

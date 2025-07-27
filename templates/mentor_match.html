@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="text-center mb-4">Find Your Mentor</h2>
+
+<div class="row mb-4">
+  <div class="col-md-4">
+    <select id="skillFilter" class="form-select">
+      <option value="">All Skills</option>
+      <option value="AI">AI</option>
+      <option value="ML">Machine Learning</option>
+      <option value="Education">Education</option>
+      <option value="Agriculture">Agriculture</option>
+    </select>
+  </div>
+  <div class="col-md-4">
+    <select id="ratingFilter" class="form-select">
+      <option value="">All Ratings</option>
+      <option value="5">5 Stars</option>
+      <option value="4">4 Stars & Up</option>
+      <option value="3">3 Stars & Up</option>
+    </select>
+  </div>
+  <div class="col-md-4">
+    <button class="btn btn-primary w-100" id="filterBtn">Filter</button>
+  </div>
+</div>
+
+<div class="row" id="mentorList"></div>
+
+<script>
+async function loadMentors(filters={}) {
+  const res = await fetch('/mentor-match', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(filters)
+  });
+  const data = await res.json();
+  const list = document.getElementById('mentorList');
+  list.innerHTML = '';
+
+  if (!data.matches.length) {
+    list.innerHTML = '<p class="text-center">No mentors found.</p>';
+    return;
+  }
+
+  data.matches.forEach(m => {
+    list.innerHTML += `
+      <div class="col-md-4 mb-4 mentor-card animate-card">
+        <div class="card shadow">
+          <img src="/static/img/${m.image}" class="card-img-top" alt="${m.name}">
+          <div class="card-body">
+            <h5>${m.name}</h5>
+            <p>${m.location}</p>
+            <p>Rating: ⭐ ${m.rating}</p>
+            <a href="/mentor/${m.name.toLowerCase().replace(/ /g,'_')}" class="btn btn-outline-primary">View Profile</a>
+          </div>
+        </div>
+      </div>`;
+  });
+}
+
+document.getElementById('filterBtn').onclick = () => {
+  const skill = document.getElementById('skillFilter').value;
+  const rating = document.getElementById('ratingFilter').value;
+  loadMentors({ skill, rating });
+};
+
+window.onload = () => loadMentors();
+</script>
+
+<style>
+.animate-card { animation: fadeUp 0.4s ease-in-out; }
+@keyframes fadeUp {
+  from {opacity:0; transform:translateY(20px);}
+  to {opacity:1; transform:translateY(0);}
+}
+.mentor-card:hover { transform: scale(1.03); transition: transform 0.3s ease; }
+</style>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mb-4 text-center translate-text">Book a Mentorship Session</h2>
+
+<div class="card shadow p-4">
+  <form id="scheduleForm">
+    <div class="mb-3">
+      <label class="form-label translate-text">Select Mentor</label>
+      <select class="form-select" id="mentorSelect" required>
+        <option value="">-- Choose Mentor --</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label translate-text">Session Title</label>
+      <input type="text" class="form-control" id="sessionTitle" placeholder="e.g., Career guidance" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label translate-text">Select Date</label>
+      <input type="date" class="form-control" id="sessionDate" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label translate-text">Select Time</label>
+      <input type="time" class="form-control" id="sessionTime" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label translate-text">Additional Notes</label>
+      <textarea class="form-control" id="sessionNotes" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary translate-text">Book Session</button>
+  </form>
+</div>
+
+<hr class="my-5">
+
+<h3 class="text-center mb-4 translate-text">Upcoming Sessions</h3>
+<ul class="list-group" id="sessionList"></ul>
+
+<div class="text-center mt-3">
+  <a href="/scheduled-sessions" class="btn btn-secondary">View All Sessions</a>
+</div>
+
+<script>
+async function loadMentors() {
+  const res = await fetch('/api/mentors');
+  const mentors = await res.json();
+  const mentorSelect = document.getElementById('mentorSelect');
+  mentorSelect.innerHTML = '<option value="">-- Choose Mentor --</option>';
+  mentors.forEach(m => {
+    const opt = document.createElement('option');
+    opt.value = m.name;
+    opt.textContent = `${m.name} (${m.location})`;
+    mentorSelect.appendChild(opt);
+  });
+}
+
+async function loadSessions() {
+  const res = await fetch('/api/sessions');
+  if (!res.ok) return;
+  const sessions = await res.json();
+  const list = document.getElementById('sessionList');
+  list.innerHTML = "";
+  if (sessions.length === 0) {
+    list.innerHTML = "<li class='list-group-item text-muted'>No upcoming sessions.</li>";
+    return;
+  }
+  sessions.slice(-5).reverse().forEach(s => {
+    const li = document.createElement('li');
+    li.className = "list-group-item";
+    li.textContent = `${s.date} ${s.time} - ${s.mentor} : ${s.title}`;
+    list.appendChild(li);
+  });
+}
+
+document.getElementById('scheduleForm').onsubmit = async function(e) {
+  e.preventDefault();
+  const data = {
+    mentor: document.getElementById('mentorSelect').value,
+    title: document.getElementById('sessionTitle').value,
+    date: document.getElementById('sessionDate').value,
+    time: document.getElementById('sessionTime').value,
+    notes: document.getElementById('sessionNotes').value
+  };
+  const res = await fetch('/schedule', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
+  });
+  const result = await res.json();
+  if (result.status === "scheduled") {
+    alert("Session booked successfully!");
+    window.location.href = "/scheduled-sessions"; // Redirect to see all sessions
+  } else {
+    alert("Failed to schedule session.");
+  }
+};
+
+loadMentors();
+loadSessions();
+</script>
+{% endblock %}

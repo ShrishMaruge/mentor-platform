@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero-section text-white d-flex align-items-center justify-content-center text-center">
+  <div>
+    <h1 class="display-4 fw-bold animate-fade">Empowering Rural Youth with AI-Powered Mentorship</h1>
+    <p class="lead mt-3 animate-fade">Voice-first interactions, real-time mentor matching, and multilingual support.</p>
+    <a href="/mentor-match" class="btn btn-primary btn-lg mt-3 shadow">Find a Mentor</a>
+    <a href="/progress" class="btn btn-outline-light btn-lg mt-3 shadow">Track Your Progress</a>
+  </div>
+</section>
+
+<section class="row mt-5 text-center">
+  <div class="col-md-4">
+    <div class="card hover-card p-3 shadow-sm">
+      <h4>Find a Mentor</h4>
+      <p>Discover mentors based on skills, location, and goals.</p>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card hover-card p-3 shadow-sm">
+      <h4>Track Progress</h4>
+      <p>Set and monitor your goals with detailed insights.</p>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card hover-card p-3 shadow-sm">
+      <h4>Voice Navigation</h4>
+      <p>Hands-free navigation with voice commands.</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

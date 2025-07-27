@@ -1,0 +1,59 @@
+[
+    {
+        "name": "Amit Kumar",
+        "skills": ["agriculture", "farming", "entrepreneurship"],
+        "location": "Bihar",
+        "contact": "amit@example.com",
+        "bio": "Expert in modern farming techniques and rural entrepreneurship.",
+        "rating": 4.7,
+        "image": "mentors/amit.jpg"
+    },
+    {
+        "name": "Priya Sharma",
+        "skills": ["education", "career guidance", "soft skills"],
+        "location": "Rajasthan",
+        "contact": "priya@example.com",
+        "bio": "Helping rural youth with career guidance and personal growth.",
+        "rating": 4.9,
+        "image": "mentors/priya.jpg"
+    },
+    {
+        "name": "Ramesh Yadav",
+        "skills": ["dairy farming", "livestock management"],
+        "location": "Uttar Pradesh",
+        "contact": "ramesh@example.com",
+        "bio": "Specialist in dairy farming and livestock optimization.",
+        "rating": 4.5,
+        "image": "mentors/ramesh.jpg"
+    },
+    {
+        "name": "Sneha Patil",
+        "skills": ["handicrafts", "self-employment", "microbusiness"],
+        "location": "Maharashtra",
+        "contact": "sneha@example.com",
+        "bio": "Empowering women in rural areas to start microbusinesses.",
+        "rating": 4.8,
+        "image": "mentors/sneha.jpg"
+    },
+    {
+        "name": "Arun Das",
+        "skills": ["IT skills", "digital marketing", "freelancing"],
+        "location": "Assam",
+        "contact": "arun@example.com",
+        "bio": "Guiding youth to learn IT and earn via freelancing.",
+        "rating": 4.6,
+        "image": "mentors/arun.jpg"
+    },
+    {
+        "name": "Amit Sharma",
+        "location": "Delhi",
+        "skills": ["business", "leadership", "career"],
+        "rating": 4
+      },
+      {
+        "name": "Priya Singh",
+        "location": "Mumbai",
+        "skills": ["tech", "coding", "startup"],
+        "rating": 5
+      }
+]
