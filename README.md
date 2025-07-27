@@ -20,7 +20,11 @@ This platform offers **mentor matching, session scheduling, progress tracking, r
 ## 🖼 **Screenshots / Output**
 
 ### **Home Page**
-![Home Page](<img width="1892" height="901" alt="Screenshot 2025-07-28 000405" src="https://github.com/user-attachments/assets/9c0b4964-b361-4be1-8555-49e535f2812b" />)
+![Home Page](<img width="1892" height="901" alt="Screenshot 2025-07-28 000405" src="https://github.com/user-attachments/assets/9c0b4964-b361-4be1-8555-49e535f2812b" />
+
+)
+
+
 
 ### **Mentor Match Page**
 ![Mentor Match](<img width="1901" height="901" alt="Screenshot 2025-07-28 000614" src="https://github.com/user-attachments/assets/4d379f6b-39d6-4f2b-b1a6-c29fcb7f7208" />
